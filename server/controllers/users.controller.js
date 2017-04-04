@@ -4,18 +4,19 @@ const jqt    = require('jsonwebtoken');
 
 module.exports = {
     getAllUser: (req, res) => {
-        user.find( {}, {__V: false, password: false}, (err, data) => {
+        user.allUsers((err,data) => {
             res.send(data)
         })
     },
 
     createUser: (req, res) => {
-        user.findOne({userName: req.body.userName}, (err, username) => {
+        user.usernameCheck(req.body.userName, (err, username) => {
             if(username) res.json({err: "Username already taken!"})
             else{
-                user.findOne({email: req.body.email}, (err, email) =>{
+                user.emailCheck(req.body.email, (err, email) =>{
                 if(email) res.json({err: "Email already taken!"})
                 else{
+                    // user.createUser(req.body.firstName, req.body.lastName, req.body.userName, req.body.email, req.body.password, req.body.phone)
                     let newUser = user({
                         firstName: req.body.firstName,
                         lastName : req.body.lastName,
