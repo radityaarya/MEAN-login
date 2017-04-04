@@ -1,19 +1,20 @@
-const user   = requier('../models.users.model');
-const crypto = requier('crypto-js');
+const user   = require('../models/user.model');
+const crypto = require('crypto-js');
 const jqt    = require('jsonwebtoken');
 
-module.export = {
+module.exports = {
     getAllUser: (req, res) => {
-        user.find( {}, {__V: false, password: false}, err(err, data) => {
+        user.find( {}, {__V: false, password: false}, (err, data) => {
             res.send(data)
         })
     },
 
     createUser: (req, res) => {
-        user.findOne({userName: req.body.username}, (err, data) => {
-            if(data) res.json({err: "Username already taken!"})
-            user.findOne({email: req.body.email}, (err, data) =>{
-                if(data) res.json({err: "Email already taken!"})
+        user.findOne({userName: req.body.userName}, (err, username) => {
+            if(username) res.json({err: "Username already taken!"})
+            else{
+                user.findOne({email: req.body.email}, (err, email) =>{
+                if(email) res.json({err: "Email already taken!"})
                 else{
                     let newUser = user({
                         firstName: req.body.firstName,
@@ -25,11 +26,12 @@ module.export = {
                     })
 
                     newUser.save((err, created) => {
-                        if (err) res.json({err.errors})
-                        else res.send({'Registration success'})
+                        if (err) res.send(err.errors)
+                        else res.send('Registration success')
                     })
                 }
             })
+            }
         })
     }
 }
