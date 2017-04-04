@@ -22,7 +22,7 @@ module.exports = {
                         lastName : req.body.lastName,
                         userName : req.body.userName,
                         email    : req.body.email,
-                        password : req.body.password,
+                        password : crypto.HmacSHA1(req.body.password, process.env.HASH_KEY || 'use the force luke'),
                         phone    : req.body.phone || ''
                     })
 
