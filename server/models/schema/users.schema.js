@@ -45,17 +45,4 @@ const UserSchema = new Schema({
   timestamps : true
 })
 
-// model logic
-UserSchema.statics.allUsers = function(cb) {
-    return this.find( {}, {__V: false, password: false}, cb)
-}
-
-UserSchema.statics.usernameCheck = function(reqUserName, cb) {
-    return this.findOne({userName: reqUserName}, cb)
-}
-
-UserSchema.statics.emailCheck = function(reqEmail, cb){
-    return this.findOne({email: reqEmail}, cb)
-}
-
-module.exports = mongoose.model('Users', UserSchema)
+module.exports = UserSchema
