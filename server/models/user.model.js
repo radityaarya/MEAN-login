@@ -4,17 +4,17 @@ const Schema   = mongoose.Schema;
 const UserSchema = new Schema({
 
     firstName : {
-        type: String,
+        type    : String,
         required: [true, 'First name required']
     },
     lastName : {
-        type: String,
+        type    : String,
         required: [true, 'Last name required']
     },
     userName : {
-        type: String,
-        requierd: [true, 'Username required'],
-        unique : true
+        type    : String,
+        required: [true, 'Username required'],
+        unique  : true
     },
     email : {
         type    : String,
@@ -27,11 +27,11 @@ const UserSchema = new Schema({
         }
     },
     password : {
-        type: String,
-        requierd: [true, 'Password required']
+        type    : String,
+        required: [true, 'Password required'],
     },
     phone : {
-        type: String,
+        type    : String,
         validate: {
             validator: (x) => {
                 return /^\d+$/.test(x)
